@@ -1,0 +1,34 @@
+<html> 
+<head>
+  <style>
+    table{width:100%}th,td{}th button{cursor:pointer}td button{cursor:pointer}td input{width:100%}.add-row button{cursor:pointer}
+  </style>
+</head>
+<body>
+  <table>
+    <thead>
+      <tr>
+        <th><button onclick="copyText('Name')">Name</button></th>
+        <th><button onclick="copyText('Age')">Age</button></th>
+        <th><button onclick="copyText('Magnetism')">Magnetism</button></th>
+      </tr>
+    </thead>
+    <tbody id="table-body">
+      <tr>
+        <td><input type="text" id="name-0"></td>
+        <td><input type="text" id="age-0"></td>
+        <td><input type="text" id="magnetism-0"></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="add-row">
+    <button onclick="addRow()">Add Row</button>
+  </div>
+  <script>
+    let rowCounter=1;
+    function copyText(column){const text=getData();const input=document.getElementById(`${column.toLowerCase()}-${rowCounter-1}`);input.value=text;}
+    function addRow(){const tableBody=document.getElementById("table-body");const newRow=document.createElement("tr");newRow.innerHTML=`<td><input type="text" id="name-${rowCounter}"></td><td><input type="text" id="age-${rowCounter}"></td><td><input type="text" id="magnetism-${rowCounter}"></td>`;tableBody.appendChild(newRow);rowCounter++;}
+    function getData(){return "Text";}
+  </script>
+</body>
+</html>
