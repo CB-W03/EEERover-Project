@@ -18,16 +18,19 @@ window.addEventListener('load', () => {
     document.addEventListener('mousedown', startDrawing);
     document.addEventListener('mouseup', stopDrawing);
     document.addEventListener('mousemove', Draw);
+    //this is to allow touch control so joystick is functional on a phone
     document.addEventListener('touchstart', startDrawing);
     document.addEventListener('touchend', stopDrawing);
     document.addEventListener('touchcancel', stopDrawing);
     document.addEventListener('touchmove', Draw);
     window.addEventListener('resize', resize);
+    //connects with the websocket at port 81
     socket = new WebSocket('ws://' + window.location.hostname + ':81/');
     socket.onopen = function(event){
         console.log('WebSocket connection established');
     };
 });
+//this funcion is used to send coordinates to server(arduino) to be processed and drive motors
 function sendCoordinates(x, y){
     var coordinates = {
         X: x,
@@ -64,6 +67,7 @@ function joystick(width, height) {
     ctx.stroke();
 }
 let coord = { x: 0, y: 0 };
+//paint is used to determine if the joystick should be drawn upon mouse movements
 let paint = false;
 function getPosition(event) {
     var mouse_x = event.clientX || event.touches[0].clientX;
@@ -71,6 +75,8 @@ function getPosition(event) {
     coord.x = mouse_x - canvas.offsetLeft;
     coord.y = mouse_y - canvas.offsetTop;
 }
+//this function allows you to get distance of mouse position or finger position 
+//from the center of the circle.
 function is_it_in_the_circle() {
     var current_radius = Math.sqrt(Math.pow(coord.x - x_orig, 2) + Math.pow(coord.y - y_orig, 2));
     if (radius >= current_radius){return true}
@@ -91,6 +97,7 @@ function stopDrawing() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     background();
     joystick(width / 2, height / 3);
+    //sends these coordinates to arduino to stop it moving
     sendCoordinates(0, 0);
 }
 function Draw(event) {
@@ -115,7 +122,6 @@ function Draw(event) {
         sendCoordinates(x_relative, y_relative);
     }
 }
-
     </script>
 </body>
 </html>
