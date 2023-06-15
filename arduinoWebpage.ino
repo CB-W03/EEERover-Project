@@ -3,8 +3,8 @@
 
 #include <WiFiWebServer.h>
 
-const char ssid[] = "TheiPhone";
-const char pass[] = "amogussus";
+const char ssid[] = "WIFI_NAME";
+const char pass[] = "WIFI_PASSWORD";
 const int groupNumber = 0; // Set your group number to make the IP address constant - only do this on the EEERover network
 
 //IR sensor variables:
